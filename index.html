@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login component with useReducer</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    
+
+
+    <script type="text/babel">
+
+        const themes = {
+            light : {
+                foreground: '#000000',
+                background: '#eeeeee'
+            },
+            dark : {
+                foreground: '#ffffff',
+                background: '#222222'
+            }
+        }
+
+        const  ThemeContext = React.createContext(themes.light);
+        function App(props){
+            return(
+                <div>
+                    <MatCard>
+                        <MatHeader heading='Light Theme'></MatHeader>
+                        <div>
+                            Enter email: <MatField/>
+                            <MatButton/>
+                        </div>
+                    </MatCard>
+
+
+                    <ThemeContext.Provider value = {themes.dark}>
+
+                    <MatCard>
+                        <MatHeader heading='Dark Theme'></MatHeader>
+                        <div>
+                            Enter email: <MatField/>
+                            <MatButton/>
+                        </div>
+                    </MatCard>
+                    </ThemeContext.Provider>
+                </div>
+            )
+        }
+
+        function MatCard(props){
+            const theme =  React.useContext(ThemeContext);
+            return(
+                
+
+                <div style={
+                    {
+                        backgroundColor: theme.background,
+                        color: theme.foreground,
+                        padding: '3px',
+                        border: '1px solid grey',
+                        borderRadius: '5px',
+                        margin: "10px",
+                        width: '30vw'
+                    }
+                }>
+                    {props.children}
+                </div>
+            )
+        }
+
+        function MatHeader(props){
+            const theme = React.useContext(ThemeContext)
+            return(
+                <h3 style={
+                        {
+                            backgroundColor: theme.background,
+                            color: theme.foreground,
+                            padding: '3px'
+                        }
+                    } >
+                   {props.heading}
+                </h3>
+            );
+        }
+
+        function MatField(props){
+            const theme = React.useContext(ThemeContext)
+            return(
+                <input style={
+                    {
+                        backgroundColor: theme.background,
+                        color: theme.foreground,
+                        border: '1px solid',
+                        borderColor: '',
+                        marginRight: '5px'
+                    }
+                }/>
+            );
+        }
+
+        function MatButton(props){
+            const theme = React.useContext(ThemeContext)
+            return(
+                <button style={
+                    {
+                        backgroundColor: theme.background,
+                        color: theme.foreground,
+                    }
+                }>submit</button>
+            )
+        }
+        ReactDOM.render( <App/>, document.getElementById("root"))
+     
+    </script>
+    
+</body>
+</html>
